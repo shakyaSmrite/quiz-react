@@ -4,8 +4,6 @@ A user is taken through a series of multiple choice questions and being assessed
 -On the last page display final score (no visuals provided)
 - Data is provide in API folder
 
-Use create-react-app to boilerplate app code (npm install -g create-react-app)
-https://github.com/facebookincubator/create-react-app
 
 Good Luck!
 
