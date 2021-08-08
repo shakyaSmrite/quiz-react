@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import React, { useState } from "react";
 import data from "./api/multipleChoice.json";
@@ -30,7 +29,7 @@ function App() {
 
   //answercheck and score update
   function handleCheckAns(id) {
-    id == copyData[ques].correctAnswerID
+    id === copyData[ques].correctAnswerID
       ? setScore(score + 1)
       : setScore(score + 0);
   }
@@ -49,14 +48,13 @@ function App() {
     <div className="App">
       <header className="App-header">
         {/* User */}
-        <h4>WELCOME Smriti Shakya !! </h4>
-
+        <p className="users">WELCOME Smriti Shakya !! </p>
 
         {/* Question and subquestion */}
         {ques < copyData.length ? (
           <>
-            <h1>{copyData[ques].question} </h1>
-            <h2>{copyData[ques].subQuestion}</h2>
+            <h1 className="ques1">{copyData[ques].question} </h1>
+            <h2 className="ques2">{copyData[ques].subQuestion}</h2>
 
             {/*previous and next buttons */}
             <button
@@ -77,10 +75,9 @@ function App() {
             {/* answer options */}
             <DisplayOptions copyData={copyData} ques={ques} />
           </>
-          
         ) : (
           <>
-            <p> Score {score} </p>
+            <p> Score: {score} </p>
           </>
         )}
       </header>

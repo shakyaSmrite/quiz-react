@@ -1,3 +1,7 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 .App {
   text-align: center;
 }
@@ -5,6 +9,15 @@
 .App-logo {
   height: 40vmin;
   pointer-events: none;
+}
+
+.users {
+  font-size: 20px;
+}
+
+.btn-next{
+  float: right;
+
 }
 
 @media (prefers-reduced-motion: no-preference) {
