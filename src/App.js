@@ -1,11 +1,21 @@
 import "./App.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import data from "./api/multipleChoice.json";
+import QuestionList from "./components/QuestionList.jsx";
+import SubQuestionList from "./components/SubQuestionList";
 
 function App() {
   const copyData = [...data.options];
-  const [score, setScore] = useState(0);
   const [ques, setQues] = useState(0);
+
+  //correctAnswerList array
+  const answerList = [];
+  for (let i = 0; i < copyData.length; i++) {
+    answerList.push(copyData[i].correctAnswerID);
+  }
+  //console.log(answerList, "answer list");
+  const [score, setScore] = useState([]);
+  let copyScore = [...score];
 
   //function call to change to next question
   function handleNextClick(i) {
@@ -29,10 +39,22 @@ function App() {
 
   //answercheck and score update
   function handleCheckAns(id) {
-    id === copyData[ques].correctAnswerID
-      ? setScore(score + 1)
-      : setScore(score + 0);
+    copyScore[ques] = id;
+    setScore([...copyScore]);
   }
+
+  function calculateScore() {
+    let counter = 0;
+    for (let i = 0; i < score.length; i++) {
+      if ((score[i] = answerList[i])) {
+        counter = counter + 1;
+      }
+    }
+    return counter;
+  }
+
+  // console.log(copyScore, "copyscore");
+  // console.log(score, "score");
 
   //display answer options
   function DisplayOptions({ copyData, ques }) {
@@ -53,17 +75,10 @@ function App() {
         {/* Question and subquestion */}
         {ques < copyData.length ? (
           <>
-            <h1 className="ques1">{copyData[ques].question} </h1>
-            <h2 className="ques2">{copyData[ques].subQuestion}</h2>
+            <QuestionList copyData={copyData} ques={ques} />
+            <SubQuestionList copyData={copyData} ques={ques} />
 
             {/*previous and next buttons */}
-            <button
-              id="btn-next"
-              disabled={handleNextDisabler(ques)}
-              onClick={() => handleNextClick(ques)}
-            >
-              Next
-            </button>
             <button
               id="btn-prev"
               disabled={handlePrevDisabler(ques)}
@@ -72,12 +87,23 @@ function App() {
               Previous
             </button>
 
+            <button
+              id="btn-next"
+              disabled={handleNextDisabler(ques)}
+              onClick={() => handleNextClick(ques)}
+            >
+              Next
+            </button>
+
+            <br />
+            <br />
+
             {/* answer options */}
             <DisplayOptions copyData={copyData} ques={ques} />
           </>
         ) : (
           <>
-            <p> Score: {score} </p>
+            <p> Score: {calculateScore()} </p>
           </>
         )}
       </header>
