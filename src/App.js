@@ -8,14 +8,18 @@ function App() {
   const copyData = [...data.options];
   const [ques, setQues] = useState(0);
 
+  const [selected, setSelected] = useState([]);
+  const defaultColor = "#F3CA40";
+  const selectedColor = "#F2A541";
+
   //correctAnswerList array
   const answerList = [];
   for (let i = 0; i < copyData.length; i++) {
     answerList.push(copyData[i].correctAnswerID);
   }
+
   //console.log(answerList, "answer list");
   const [score, setScore] = useState([]);
-  let copyScore = [...score];
 
   //function call to change to next question
   function handleNextClick(i) {
@@ -38,10 +42,17 @@ function App() {
   }
 
   //answercheck and score update
-  function handleCheckAns(id) {
-    copyScore[ques] = id;
+  function handleCheckAns(id, ques) {
+    const copySelected = [...selected];
+    copySelected[ques] = Number(id);
+    setSelected([...copySelected]);
+
+    let copyScore = [...score];
+    copyScore[ques] = Number(id);
     setScore([...copyScore]);
   }
+
+  //console.log(score, "Score");
 
   function calculateScore() {
     let counter = 0;
@@ -59,7 +70,15 @@ function App() {
   //display answer options
   function DisplayOptions({ copyData, ques }) {
     const btn = copyData[ques].answers.map((i, index) => (
-      <button onClick={() => handleCheckAns(i.id)} key={index}>
+      <button
+        style={{
+          backgroundColor: `${
+            selected[ques] === index + 1 ? defaultColor : selectedColor
+          }`,
+        }}
+        onClick={() => handleCheckAns(i.id, ques)}
+        key={index}
+      >
         {i.answer}
       </button>
     ));
