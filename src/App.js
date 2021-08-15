@@ -57,7 +57,7 @@ function App() {
   function calculateScore() {
     let counter = 0;
     for (let i = 0; i < score.length; i++) {
-      if ((score[i] = answerList[i])) {
+      if (score[i] === answerList[i]) {
         counter = counter + 1;
       }
     }
